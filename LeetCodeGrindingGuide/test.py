@@ -114,4 +114,48 @@ def checkPossibility(nums):
         if count > 1:
             return False
     return True
-print(checkPossibility([4,2,1]))
+# print(checkPossibility([4,2,1]))
+def merge(nums1, m, nums2, n):
+    nums1 = [i for i in nums1 if i != 0]
+    nums2 = [i for i in nums2 if i != 0]
+    nums2 = nums1+nums2
+    nums2.sort()
+    return nums2
+
+# print(merge([1,2,3,0,0,0],3,[2,5,6],3))
+
+def minWindow(s,t):
+    import copy
+    position = 0
+    sub_str = []
+    temp_t = list(t)
+    temp_t.sort()
+    temp_t = "".join(temp_t)
+    while position < len(s):
+        for i in range(position,len(s)):
+            strip_s = s[position:i]
+            temp_strip_s = strip_s[:]
+            temp_strip_s = list(temp_strip_s)
+            temp_strip_s.sort()
+            temp_strip_s = "".join(temp_strip_s)
+            print(strip_s)
+            if temp_t in temp_strip_s:
+                sub_str.append(strip_s)
+                position += 1
+                break
+
+    return sub_str
+print(minWindow("ADOBECODEBANC","ABC"))
+
+
+
+
+
+
+
+
+
+
+
+
+

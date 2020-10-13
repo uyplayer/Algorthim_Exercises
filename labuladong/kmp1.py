@@ -67,9 +67,8 @@ def kmp(p,s,id):
             return i - len(p)
         else:
             return 0
-
-p = "acabaabaabcacaabc"
-s = "abaabcac"
+p = "ADOBECODEBANC"
+s = "BANC"
 print(kmp(p,s,0))
 
 

@@ -3,7 +3,7 @@
 # @Time    : 2020/10/8 9:41
 # @Author  : uyplayer
 # @Site    : uyplayer.xyz
-# @File    : greedy algorithm.py
+# @File    : algorithm.py
 # @Software: PyCharm
 
 '''
@@ -325,3 +325,48 @@ def twoSum(numbers,target):
         else:
             r = r - 1
     return [l + 1, r + 1]
+'''
+合并两个有序数组
+https://leetcode-cn.com/problems/merge-sorted-array/
+'''
+# 下面的代码对 但是无法通过力扣
+# def merge(nums1, m, nums2, n):
+#     nums1 = [i for i in nums1 if i != 0]
+#     nums2 = [i for i in nums2 if i != 0]
+#     num = nums1+nums2
+#     num.sort()
+#     return num
+#-------------------------------------、
+# 下面的代码正确
+def merge(nums1, m, nums2, n):
+    nums1[:] = sorted(nums1[:m] + nums2)
+    return nums1
+print(merge([1,2,3,0,0,0],3,[2,5,6],3))
+
+'''
+环形链表 II
+https://leetcode-cn.com/problems/linked-list-cycle-ii/
+求这个链表的循环的开始位置：解决办法是设计两个指针，一个快，一个慢，就是快慢指针；快直接走的比慢指针快一些，当两个指针等于的时候就是说明，我们这个数据中存在环；
+然后我们怎么求这个环的开始位置呢？当我们通过循环找到以后fast == slow 以后while 推出，我们设 fast = head 重新赋值；再一次循环当他们两个等于的时候就等于fast 找到这个循环入口
+'''
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def detectCycle(head):
+        fast = head
+        slow = head
+        while True:
+            if not fast or not fast.next:
+                return
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                break
+        # 返回入环的第一个点
+        fast = head
+        while fast != slow:
+            fast, slow = fast.next, slow.next
+        return fast
