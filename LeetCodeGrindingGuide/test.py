@@ -145,10 +145,75 @@ def minWindow(s,t):
                 break
 
     return sub_str
-print(minWindow("ADOBECODEBANC","ABC"))
+# print(minWindow("ADOBECODEBANC","ABC"))
+import sys
+def minWindow(s,t):
+    print("s:",s)
+    print("t:",t)
+    # 两个变量 分别记录需要的字母及出现的次数，和已经出现的字母
+    need = {}
+    window = {}
+    for i in t:
+        if i in need.keys():
+            need[i] = need[i] + 1
+        else:
+            temp = {i: 1}
+            need.update(temp)
+    window = {el: 0 for el in need.keys()}
+    print("need:", need)
+    print("window:", window)
+    start = left = right = 0
+    match = 0
+    min_len = sys.maxsize
+    while (right < len(s)):
+        ch = s[right]
+        if ch in need.keys():
+            window[ch] = window[ch] + 1
+            if window[ch] == need[ch]:
+                match = match + 1
+        right = right + 1
 
+        # 找到匹配的字符串，开始缩小范围
+        while (match == len(need)):
+            # 更新
+            if (right - left) < min_len:
+                start = left
+                min_len = right - left
+                tempchar = s[left]
+            if tempchar in window.keys():
+                window[tempchar] = window[tempchar] - 1
+                if (window[tempchar] < need[tempchar]):
+                    match = match - 1
+            left = left + 1
+    if min_len == sys.maxsize:
+        return ""
+    else:
+        end = start + min_len
+        return s[start:end]
 
-
+from collections import defaultdict,Counter
+def minWindow(s,t):
+    # 对t进行统计
+    ans = ''
+    l = 0
+    minn = 99999
+    d = Counter(t)
+    dd = defaultdict(int)
+    for i in range(len(s)):
+        dd[s[i]] += 1
+        while involve(d, dd):
+            if i - l < minn:
+                minn = i - l
+                ans = s[l:i + 1]
+            dd[s[l]] -= 1
+            l += 1
+    return ans
+def involve(a,b):
+    for k,v in a.items():
+        if k not in b or b[k]<v:
+            return False
+    return True
+print(minWindow('ADOBECODEBANC','BANC'))
 
 
 

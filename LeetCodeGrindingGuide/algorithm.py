@@ -370,3 +370,92 @@ class Solution:
         while fast != slow:
             fast, slow = fast.next, slow.next
         return fast
+
+
+'''
+最小覆盖子串
+https://leetcode-cn.com/problems/minimum-window-substring
+'''
+# import sys
+# def minWindow(self, s: str, t: str) -> str:
+#     # 两个变量 分别记录需要的字母及出现的次数，和已经出现的字母
+#     need = {}
+#     window = {}
+#     for i in t:
+#         if i in need.keys():
+#             need[i] = need[i] + 1
+#         else:
+#             temp = {i: 1}
+#             need.update(temp)
+#     window = {el: 0 for el in need.keys()}
+#     print("need:",need)
+#     print("window:",window)
+#     start = left = right = 0
+#     match = 0
+#     min_len = sys.maxsize
+#     while (right < len(s)):
+#         ch = s[right]
+#         if ch in need.keys():
+#             window[ch] = window[ch] + 1
+#             if window[ch] == need[ch]:
+#                 match = match + 1
+#         right = right + 1
+#
+#         # 找到匹配的字符串，开始缩小范围
+#         while (match == len(need)):
+#             # 更新
+#             if (right - left) < min_len:
+#                 start = left
+#                 min_len = right - left
+#             tempchar = s[left]
+#             if tempchar in window.keys():
+#                 window[tempchar] = window[tempchar] - 1
+#                 if (window[tempchar] < need[tempchar]):
+#                     match = match - 1
+#             left = left + 1
+#     if min_len == sys.maxsize:
+#         return ""
+#     else:
+#         end = start + min_len
+#         return s[start:end]
+
+'''
+最小覆盖子串
+https://leetcode-cn.com/problems/minimum-window-substring
+滑动窗口求解，即两个指针 l 和 r 都是从最左端向最右端移动，且 l 的位置一定在
+r 的左边或重合。注意本题虽然在 for 循环里出现了一个 while 循环，但是因为 while 循环负责移
+动 l 指针，且 l 只会从左到右移动一次，因此总时间复杂度仍然是 O(n)。本题使用了长度为 128
+的数组来映射字符，也可以用哈希表替代；其中 chars 表示目前每个字符缺少的数量，flag 表示
+每个字符是否在 T 中存在。
+'''
+def minWindow(s,t):
+    from collections import Container,defaultdict
+    # 对t进行统计
+    ans = ''
+    l = 0
+    minn = 99999
+    d = Container(t)
+    dd = defaultdict(int)
+    for i in range(len(s)):
+        dd[s[i]] += 1
+        while involve(d, dd):
+            if i - l < minn:
+                minn = i - l
+                ans = s[l:i + 1]
+            dd[s[l]] -= 1
+            l += 1
+    return ans
+def involve(a,b):
+    for k,v in a.items():
+        if k not in b or b[k]<v:
+            return False
+    return True
+minWindow('ADOBECODEBANC','BANC')
+
+
+
+
+
+
+
+
