@@ -476,6 +476,8 @@ def judgeSquareSum(c):
     return False
 
 
+'''   第四章    '''
+
 '''
 https://leetcode-cn.com/problems/valid-palindrome-ii/
 '''
@@ -536,6 +538,37 @@ def lengthOfLongestSubstringKDistinct(self, s: str, k: int) -> int:
                 res = max(res, right - left + 1)
     return res
 
+'''
+https://leetcode-cn.com/problems/sqrtx/submissions/
+'''
+def mySqrt(self, x: int) -> int:
+    sqrt = 1
+    while sqrt * sqrt <= x:
+        sqrt += 1
+    return sqrt - 1
+
+'''
+3.4 - 34
+https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/submissions/
+'''
+def searchRange(self, nums: List[int], target: int) -> List[int]:
+    if target not in nums:
+        return [-1, -1]
+    index = []
+    for key, value in enumerate(nums):
+        if value == target:
+            index.append(key)
+
+    return [index[0], index[-1]]
+'''
+4.4 -81
+https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+'''
+def search(self, nums: List[int], target: int) -> bool:
+    if target in nums:
+        return True
+    else:
+        return False
 if __name__ == "__main__":
     pass
 
