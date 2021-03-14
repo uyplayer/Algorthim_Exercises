@@ -450,7 +450,97 @@ def involve(a,b):
         if k not in b or b[k]<v:
             return False
     return True
-minWindow('ADOBECODEBANC','BANC')
+# minWindow('ADOBECODEBANC','BANC')
+
+'''
+3.6 练习
+https://leetcode-cn.com/problems/sum-of-square-numbers/
+633. 平方数之和
+对于一个整数c，如果存在aa+bb=c，那么a和b的值必然不大于c的开方
+因此让a=0，b=c的开方（需要取整），当a<=b有以下三种情况
+1、aa+bb=c，说明存在这样的数，直接返回True
+2、aa+bb<c，说明a，b的值有点小，让a加1
+3、aa+bb>c，说明a，b的值有点大，让b减1
+重复2、3，直到得到1或a>b返回False
+
+'''
+def judgeSquareSum(c):
+    i, j = 0, int(c ** 0.5)
+    while i <= j:
+        if i * i + j * j == c:
+            return True
+        elif i * i + j * j > c:
+            j -= 1
+        elif i * i + j * j < c:
+            i += 1
+    return False
+
+
+'''
+https://leetcode-cn.com/problems/valid-palindrome-ii/
+'''
+def h(s):
+    return s[::-1] == s
+
+
+def validPalindrome(self, s: str) -> bool:
+    a = 0
+    b = len(s) - 1
+    while a < b:
+        if s[a] != s[b]:
+            return h(s[:a] + s[a + 1:]) or h(s[:b] + s[b + 1:])
+        b -= 1
+        a += 1
+    return True
+'''
+https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/submissions/
+'''
+
+
+def findLongestWord(self, s: str, d: List[str]) -> str:
+    h = [list(i) for i in d]
+    lenh = [len(i) for i in h]
+    for letter in s:
+        for string in h:
+            if string and string[0] == letter:
+                string.pop(0)
+    maxlen = 0
+    ans = ''
+    for i, ele in enumerate(h):
+        if not ele:
+            if lenh[i] > maxlen:
+                maxlen = lenh[i]
+                ans = d[i]
+            elif lenh[i] == maxlen:
+                ans = min(ans, d[i])
+
+    return ans if ans else ''
+
+def lengthOfLongestSubstringKDistinct(self, s: str, k: int) -> int:
+    if not s or len(s) == 0:
+        return 0
+    list1 = []
+
+    left = 0
+    # right = 0
+    res = 0
+    for right in range(len(s)):
+        if len(set(s[left:right + 1])) <= k:
+            res = max(res, right - left + 1)
+        else:
+            while len(set(s[left:right + 1])) > k:
+                left += 1
+                if left == right:
+                    break
+            if len(set(s[left:right + 1])) <= k:
+                res = max(res, right - left + 1)
+    return res
+
+if __name__ == "__main__":
+    pass
+
+
+
 
 
 
